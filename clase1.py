@@ -1,49 +1,73 @@
 clients= 'leon,sofia,'
 
-def create_client(client_name):
+def client_create(client_name):
     global clients
-    if check_client(client_name):
+    if client_name not in clients:
         clients+= client_name
         __add_comma()
         return True
     else:
-        print("ERROR")
+        print("Client is already in the list")
         return False
 
-
-def check_client(client_name):
+def  delete_client(client_name):
     global clients
-    return ~(client_name in clients)
+    if client_name in clients:
+         clients = clients.replace(client_name + ',', '')
 
+def _get_client_name():
+    return input('What its the client name?')
+
+def client_update(client_name,updated_client_name):
+    global clients
+
+    if updated_client_name not in clients:
+        if client_name in clients:
+            clients = clients.replace(client_name + ',', updated_client_name)
+        else:
+            print('The client that you are trying to update doesnt exist')
+    else:
+            print('The client that you are trying to update already exist')
 
 def __add_comma():
     global clients
     clients +=','
 
-def list_clients():
+
+def clients_list():
     global clients
     print(clients)
 
+
 def __print_welcome():
+
     print('Welcome to leon ventas')
     print('*' * 50)
     print('What would you like to do today? ')
     print('1. Create client')
     print('2. Delete Client')
-    print('3. Print all the clients')
+    print('4. Update client ')
+    print('5. Print all the clients')
+
 if __name__== '__main__':
     __print_welcome()
+    f = True
 
-    command = input()
-
+    command = input()   
     if command == '1':
-        client_name = input('What its the client name? ')
-        if create_client(client_name):
+        client_name = _get_client_name()
+        if client_create(client_name):
             print('The client has been added succesfully')
-            list_clients()
+            clients_list()
     elif command == '2':
-        pass
-    elif command == '3':
-         list_clients()
+        delete_client(_get_client_name())
+        clients_list()
+    elif command == '4':
+        client_name = _get_client_name()
+        client_name_update = _get_client_name()
+        client_update(client_name,client_name_update)
+        clients_list()
+    elif command == '5':
+         clients_list()    
     else:
         print('invalid command')
