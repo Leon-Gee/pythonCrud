@@ -1,3 +1,5 @@
+import sys
+
 clients= 'leon,sofia,'
 
 def client_create(client_name):
@@ -16,7 +18,21 @@ def  delete_client(client_name):
          clients = clients.replace(client_name + ',', '')
 
 def _get_client_name():
-    return input('What its the client name?')
+    client_name = None
+
+
+    while not client_name:
+    
+        client_name = input('What its the client name?')
+
+        if client_name == 'exit':
+            client_name = None
+            break
+
+    if not client_name:
+        sys.exit()
+
+    return client_name
 
 def client_update(client_name,updated_client_name):
     global clients
