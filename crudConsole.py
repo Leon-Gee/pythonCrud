@@ -29,6 +29,19 @@ def client_update(client_name,updated_client_name):
     #else:
       #      print('The client that you are trying to update already exist')
 
+
+def _client_search(client_name):
+    global clients
+    clients_list = clients.split(',')
+
+    for client in clients_list:
+        if client != client_name:
+            continue
+        else:
+            return True
+
+
+
 def __add_comma():
     global clients
     clients +=','
@@ -48,6 +61,7 @@ def __print_welcome():
     print('2. Read the list')
     print('3. Update Client')
     print('4. Delete client ')
+    print('5. Search Client')
 
 if __name__== '__main__':
     __print_welcome()
@@ -69,5 +83,13 @@ if __name__== '__main__':
     elif command == '4':     
         delete_client(_get_client_name())
         read_client_list()
+    elif command == '5':
+        client_name = _get_client_name()
+        found = _client_search(client_name)
+        
+        if found:
+            print('The client: {} is in the list'.format(client_name))
+        else:
+            print('The client: {} is NOT the list'.format(client_name))
     else:
         print('invalid command')
