@@ -1,12 +1,12 @@
 import sys
 
-clients= 'leon,sofia,'
+clients=['leon','sofia']
 
 def client_create(client_name):
     global clients
+
     if client_name not in clients:
-        clients+= client_name
-        __add_comma()
+        clients.append(client_name)
         return True
     else:
         print("Client is already in the list")
@@ -15,7 +15,7 @@ def client_create(client_name):
 def  delete_client(client_name):
     global clients
     if client_name in clients:
-         clients = clients.replace(client_name + ',', '')
+         clients.remove(client_name)
 
 def _get_client_name():
     client_name = None
@@ -37,35 +37,27 @@ def _get_client_name():
 def client_update(client_name,updated_client_name):
     global clients
 
-    #if updated_client_name not in clients:
     if client_name in clients:
-        clients = clients.replace(client_name, updated_client_name)
+        index = clients.index(client_name)
+        clients[index] = updated_client_name
+        #clients[clients.index(client_name)] = updated_client_name
     else:
-        print('The client that you are trying to update doesnt exist')
-    #else:
-      #      print('The client that you are trying to update already exist')
+        print('The client doesnt exist')
 
 
 def _client_search(client_name):
     global clients
-    clients_list = clients.split(',')
 
-    for client in clients_list:
+    for client in clients:
         if client != client_name:
             continue
         else:
             return True
 
-
-
-def __add_comma():
-    global clients
-    clients +=','
-
-
 def read_client_list():
     global clients
-    print(clients)
+    for idx,client in enumerate(clients):
+        print('{}: {}'.format(idx,client))
 
 
 def __print_welcome():
@@ -102,10 +94,12 @@ if __name__== '__main__':
     elif command == '5':
         client_name = _get_client_name()
         found = _client_search(client_name)
-        
+              
         if found:
             print('The client: {} is in the list'.format(client_name))
         else:
             print('The client: {} is NOT the list'.format(client_name))
+        
+        read_client_list()
     else:
         print('invalid command')
