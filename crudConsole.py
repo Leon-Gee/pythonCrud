@@ -1,7 +1,20 @@
 import sys
 
-clients=['leon','sofia']
 
+clients=[
+    {
+        'name': 'Oscar',
+        'company': 'Google',
+        'email': 'oscar.meza.leon@gmail.com'
+        'position': 'developer'
+    },
+    {
+        'name': 'Sofia',
+        'company': 'tec',
+        'email': 'sofia.algo@gmail.com'
+        'position': 'RH'
+    }
+]
 def client_create(client_name):
     global clients
 
@@ -100,6 +113,6 @@ if __name__== '__main__':
         else:
             print('The client: {} is NOT the list'.format(client_name))
         
-        read_client_list()
+        read_client_list()  
     else:
-        print('invalid command')
+        print('invalid command')    
