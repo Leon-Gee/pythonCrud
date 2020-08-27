@@ -1,20 +1,28 @@
 import sys
+import csv
+import os
+
+CLIENT_TABLE= '.clients.csv'
+CLIENT_SCHEMA =['name','company','email','position']
+clients=[]
 
 
-clients=[
-    {
-        'name': 'Oscar',
-        'company': 'Google',
-        'email':'oscar.meza.leon@gmail.com',
-        'position':'developer'
-    },
-    {
-        'name': 'Sofia',
-        'company': 'tec',
-        'email': 'sofia.algo@gmail.com',
-        'position': 'RH'
-    }
-]
+def __initializeClientsFromDisk():
+    with open(CLIENT_TABLE,mode='r') as f:
+        reader = csv.DictReader(f,fieldnames=[])
+
+        for row in reader:
+            clients.append(row)
+
+
+def __saveClientsToDisk():
+    tmp_table_name = '{}.tmp'.format(CLIENT_TABLE)
+    with open(tmp_table_name,mode='w') as f:
+        writer = csv.DictWriter(f,fieldnames=CLIENT_SCHEMA)
+        writer.writerows(clients)
+        os.remove(CLIENT_TABLE)
+        os.rename(tmp_table_name,CLIENT_TABLE)
+
 
 
 def client_create(client):
@@ -109,6 +117,7 @@ def __print_welcome():
     print('5. Search Client')
 
 if __name__== '__main__':
+    __initializeClientsFromDisk()
     __print_welcome()
     f = True
 
@@ -161,3 +170,7 @@ if __name__== '__main__':
 
     else:
         print('invalid command')    
+    
+    __saveClientsToDisk()
+
+ 
